@@ -16,7 +16,7 @@
     --danger: #EF4444;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background-color: var(--bg); color: var(--text); font-family: 'Hind Siliguri', sans-serif; padding: 20px; }
+  body { background-color: var(--bg); color: var(--text); font-family: 'Hind Siliguri', sans-serif; padding: 20px; padding-bottom: 50px; }
   .container { max-width: 480px; margin: 0 auto; }
   h1 { font-family: 'Plus Jakarta Sans'; color: var(--primary); margin-bottom: 20px; font-size: 22px; text-align: center; }
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
@@ -29,7 +29,9 @@
   .form-group label { display: block; font-size: 12px; color: var(--hint); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
   .form-group input { width: 100%; background: #0B0F19; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 12px; border-radius: 12px; font-family: 'Hind Siliguri'; font-size: 14px; outline: none; }
   .form-group input:focus { border-color: var(--primary); }
-  .btn { background: var(--primary); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: width: 100%; font-size: 15px; width: 100%; font-family: 'Plus Jakarta Sans'; box-shadow: 0 4px 12px rgba(5,150,105,0.3); }
+  .btn { background: var(--primary); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 700; width: 100%; font-size: 15px; font-family: 'Plus Jakarta Sans'; cursor: pointer; box-shadow: 0 4px 12px rgba(5,150,105,0.3); }
+  .withdraw-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+  .withdraw-item { background: #0B0F19; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
 </style>
 </head>
 <body>
@@ -43,7 +45,7 @@
       </div>
       <div class="stat-card">
         <h3>পেন্ডিং উইথড্র</h3>
-        <div class="val">৳ ০</div>
+        <div class="val" id="pendingCount">৳ ০</div>
       </div>
     </div>
 
@@ -51,18 +53,59 @@
       <h2>নতুন টাস্ক পাবলিশ করুন</h2>
       <div class="form-group">
         <label>টাস্কের শিরোনাম</label>
-        <input type="text" id="taskTitle" placeholder="যেমন: টেলিগ্রাম চ্যানেল জয়েন করুন">
+        <input type="text" id="taskTitleInput" placeholder="যেমন: টেলিগ্রাম চ্যানেল জয়েন করুন">
       </div>
       <div class="form-group">
         <label>পুরস্কার (টাকা)</label>
-        <input type="number" id="taskReward" placeholder="5">
+        <input type="number" id="taskRewardInput" placeholder="5">
       </div>
       <div class="form-group">
         <label>কাজের লিংক</label>
-        <input type="url" id="taskLink" placeholder="https://t.me/...">
+        <input type="url" id="taskLinkInput" placeholder="https://t.me/...">
       </div>
-      <button class="btn" onclick="alert('টাস্ক সফলভাবে তৈরি হয়েছে এবং ইউজার অ্যাপে যুক্ত হবে!')">টাস্ক পাবলিশ করুন</button>
+      <button class="btn" onclick="addNewTask()">টাস্ক পাবলিশ করুন</button>
+    </div>
+
+    <div class="section">
+      <h2>ইউজারের উইথড্র রিকোয়েস্ট</h2>
+      <div class="withdraw-list" id="withdrawListContainer">
+        <div style="color: var(--hint); text-align: center; font-size: 13px;">কোনো পেন্ডিং রিকোয়েস্ট নেই</div>
+      </div>
     </div>
   </div>
+
+<script>
+  function addNewTask() {
+    const title = document.getElementById('taskTitleInput').value.trim();
+    const reward = parseFloat(document.getElementById('taskRewardInput').value);
+    const link = document.getElementById('taskLinkInput').value.trim();
+
+    if(!title || !reward || !link) {
+      alert('দয়া করে সবগুলো ঘর সঠিকভাবে পূরণ করুন!');
+      return;
+    }
+
+    let existingTasks = JSON.parse(localStorage.getItem('taskboi_custom_tasks')) || [
+      { id: 1, title: 'টেলিগ্রাম চ্যানেল জয়েন করুন', reward: 5, icon: '📢', link: 'https://t.me/telegram' },
+      { id: 2, title: 'ইউটিউব ভিডিও সাবস্ক্রাইব করুন', reward: 10, icon: '▶️', link: 'https://youtube.com' }
+    ];
+
+    const newTask = {
+      id: Date.now(),
+      title: title,
+      reward: reward,
+      icon: '💼',
+      link: link
+    };
+
+    existingTasks.push(newTask);
+    localStorage.setItem('taskboi_custom_tasks', JSON.stringify(existingTasks));
+
+    alert('টাস্ক সফলভাবে পাবলিশ হয়েছে এবং ইউজার অ্যাপে যুক্ত হয়ে গেছে!');
+    document.getElementById('taskTitleInput').value = '';
+    document.getElementById('taskRewardInput').value = '';
+    document.getElementById('taskLinkInput').value = '';
+  }
+</script>
 </body>
 </html>
