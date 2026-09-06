@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskBoi - Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F172A;
+    --card: #1E293B;
+    --text: #F8FAFC;
+    --hint: #94A3B8;
+    --primary: #10B981;
+    --accent: #F59E0B;
+    --danger: #EF4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background-color: var(--bg); color: var(--text); font-family: 'Hind Siliguri', sans-serif; padding: 20px; }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 { font-family: 'Baloo Da 2'; color: var(--primary); margin-bottom: 20px; font-size: 24px; text-align: center; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: var(--card); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+  .stat-card h3 { font-size: 14px; color: var(--hint); margin-bottom: 8px; }
+  .stat-card .val { font-family: 'Baloo Da 2'; font-size: 28px; font-weight: 700; color: var(--accent); }
+  .section { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+  .section h2 { font-size: 18px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 13px; color: var(--hint); margin-bottom: 4px; }
+  .form-group input, .form-group select { width: 100%; background: #0F172A; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px; border-radius: 8px; font-family: 'Hind Siliguri'; }
+  .btn { background: var(--primary); color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; font-size: 15px; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ TaskBoi অ্যাডমিন কন্ট্রোল প্যানেল</h1>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>মোট রেজিস্টার্ড ইউজার</h3>
+        <div class="val">০ জন</div>
+      </div>
+      <div class="stat-card">
+        <h3>পেন্ডিং উইথড্র</h3>
+        <div class="val">৳ ০.০০</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>নতুন টাস্ক যোগ করুন</h2>
+      <div class="form-group">
+        <label>টাস্কের নাম</label>
+        <input type="text" placeholder="যেমন: টেলিগ্রাম চ্যানেলে জয়েন করুন">
+      </div>
+      <div class="form-group">
+        <label>পুরস্কারের পরিমাণ (টাকা)</label>
+        <input type="number" placeholder="5">
+      </div>
+      <div class="form-group">
+        <label>লিংক</label>
+        <input type="url" placeholder="https://t.me/...">
+      </div>
+      <button class="btn" onclick="alert('টাস্ক সফলভাবে তৈরি হয়েছে!')">টাস্ক পাবলিশ করুন</button>
+    </div>
+  </div>
+</body>
+</html>
