@@ -8,21 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-app: #F8FAF9;
+    --bg-app: #F4F7F6;
     --surface: #FFFFFF;
     --text-main: #0F172A;
     --text-muted: #64748B;
-    --primary: #047857;
-    --primary-gradient: linear-gradient(135deg, #047857 0%, #065F46 100%);
+    --primary: #064E3B;
+    --primary-gradient: linear-gradient(135deg, #064E3B 0%, #022C22 100%);
     --accent: #D97706;
     --danger: #EF4444;
     --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-    --radius-lg: 24px;
-    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-  body { background-color: var(--bg-app); color: var(--text-main); font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif; font-size: 15px; padding-bottom: 95px; }
+  body { background-color: var(--bg-app); color: var(--text-main); font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif; font-size: 15px; padding-bottom: 90px; }
   h1, h2, h3, .brand-font { font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif; }
 
   .app-wrapper { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; }
@@ -30,7 +30,7 @@
   /* Top Header */
   .app-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 10px; }
   .profile-box { display: flex; align-items: center; gap: 14px; }
-  .avatar-ring { width: 50px; height: 50px; border-radius: 50%; background: var(--primary-gradient); padding: 2px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(4, 120, 87, 0.2); }
+  .avatar-ring { width: 50px; height: 50px; border-radius: 50%; background: var(--primary-gradient); padding: 2px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2); }
   .avatar-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; color: var(--primary); overflow: hidden; }
   .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
   .user-details h2 { font-size: 17px; font-weight: 700; color: var(--text-main); line-height: 1.2; }
@@ -40,7 +40,7 @@
   .notification-bell span { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; }
 
   /* Wallet Card */
-  .wallet-card { background: var(--primary-gradient); color: #fff; margin: 16px 20px; padding: 24px; border-radius: var(--radius-lg); box-shadow: 0 15px 35px rgba(4, 120, 87, 0.2); position: relative; overflow: hidden; }
+  .wallet-card { background: var(--primary-gradient); color: #fff; margin: 16px 20px; padding: 24px; border-radius: var(--radius-lg); box-shadow: 0 15px 35px rgba(6, 78, 59, 0.2); position: relative; overflow: hidden; }
   .wallet-card .label { font-size: 13px; opacity: 0.9; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
   .wallet-card .balance-amount { font-family: 'Plus Jakarta Sans'; font-size: 36px; font-weight: 800; line-height: 1.2; margin: 6px 0 18px; }
   
@@ -55,7 +55,7 @@
   /* Section Title */
   .section-header { padding: 10px 20px 14px; display: flex; justify-content: space-between; align-items: center; }
   .section-header h3 { font-size: 18px; font-weight: 700; color: var(--text-main); }
-  .section-header .badge-pill { background: rgba(4, 120, 87, 0.1); color: var(--primary); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+  .section-header .badge-pill { background: rgba(6, 78, 59, 0.1); color: var(--primary); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
 
   /* Views Management */
   .view-section { display: none; }
@@ -65,11 +65,11 @@
   /* Task Cards */
   .task-container { padding: 0 20px; display: flex; flex-direction: column; gap: 14px; }
   .task-item { background: var(--surface); border-radius: var(--radius-md); padding: 18px; display: flex; align-items: center; gap: 16px; box-shadow: var(--card-shadow); border: 1px solid rgba(0,0,0,0.03); }
-  .task-icon-box { width: 52px; height: 52px; border-radius: 16px; background: rgba(4, 120, 87, 0.08); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .task-icon-box { width: 52px; height: 52px; border-radius: 16px; background: rgba(6, 78, 59, 0.08); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
   .task-info { flex: 1; }
   .task-info h4 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
   .task-info .reward { font-family: 'Plus Jakarta Sans'; font-weight: 800; color: var(--primary); font-size: 16px; }
-  .task-action-btn { background: var(--primary-gradient); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(4,120,87,0.2); }
+  .task-action-btn { background: var(--primary-gradient); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(6,78,59,0.2); }
   .task-action-btn.completed { background: #E2E8F0; color: #64748B; cursor: not-allowed; box-shadow: none; }
 
   /* Universal Card Box */
@@ -88,16 +88,20 @@
   /* Timer Modal */
   .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
   .modal-box { background: var(--surface); width: 100%; max-width: 360px; padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-  .timer-circle { width: 70px; height: 70px; border-radius: 50%; background: rgba(4,120,87,0.1); border: 3px solid var(--primary); display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans'; font-size: 24px; font-weight: 800; color: var(--primary); margin: 0 auto 16px; }
+  .timer-circle { width: 70px; height: 70px; border-radius: 50%; background: rgba(6,78,59,0.1); border: 3px solid var(--primary); display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans'; font-size: 24px; font-weight: 800; color: var(--primary); margin: 0 auto 16px; }
 
-  /* Premium In-App Admin Panel */
-  .admin-dashboard-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #F8FAF9; display: none; z-index: 2000; overflow-y: auto; padding: 20px; }
-  .admin-topbar { display: flex; justify-content: space-between; align-items: center; background: var(--primary-gradient); color: #fff; padding: 16px 20px; border-radius: 16px; margin-bottom: 20px; }
-  .admin-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 16px; }
-  .admin-tab-btn { background: #E2E8F0; border: none; padding: 10px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; color: var(--text-muted); }
-  .admin-tab-btn.active { background: var(--primary); color: #fff; }
-  .admin-content-pane { display: none; }
-  .admin-content-pane.active { display: block; }
+  /* Premium Admin Panel Styles */
+  .admin-dashboard-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #F4F7F6; display: none; z-index: 2000; overflow-y: auto; padding-bottom: 40px; }
+  .admin-header-bar { background: var(--primary); color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .admin-nav-tabs { display: flex; gap: 10px; overflow-x: auto; background: var(--primary); padding: 0 20px 16px; }
+  .admin-tab-btn { background: rgba(255,255,255,0.15); color: #fff; border: none; padding: 10px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+  .admin-tab-btn.active { background: #ffffff; color: var(--primary); }
+  .admin-pane { display: none; padding: 20px; }
+  .admin-pane.active { display: block; }
+  .admin-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .admin-stat-card { background: var(--surface); padding: 18px; border-radius: var(--radius-md); box-shadow: var(--card-shadow); border: 1px solid rgba(0,0,0,0.03); }
+  .admin-stat-card .s-label { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
+  .admin-stat-card .s-val { font-family: 'Plus Jakarta Sans'; font-size: 24px; font-weight: 800; color: var(--text-main); }
 
   /* Bottom Navigation Bar */
   .bottom-navigation { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 12px 0 20px; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05); z-index: 100; border-top: 1px solid #F1F5F9; }
@@ -182,7 +186,7 @@
     </div>
     <div class="card-box" style="text-align: center;">
       <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;">আপনার ইউনিক রেফারেল লিংক</div>
-      <div style="background: rgba(4,120,87,0.08); color: var(--primary); font-family: 'Plus Jakarta Sans'; font-size: 14px; font-weight: 800; padding: 14px; border-radius: 14px; margin: 12px 0; border: 2px dashed var(--primary); word-break: break-all;">https://t.me/taskboid_bot?start=ref_shamim</div>
+      <div style="background: rgba(6,78,59,0.08); color: var(--primary); font-family: 'Plus Jakarta Sans'; font-size: 14px; font-weight: 800; padding: 14px; border-radius: 14px; margin: 12px 0; border: 2px dashed var(--primary); word-break: break-all;">https://t.me/taskboid_bot?start=ref_shamim</div>
       <button class="action-btn" style="background: var(--primary-gradient); color: #fff; margin-bottom: 20px;" onclick="Telegram.WebApp.showAlert('লিংক কপি করা হয়েছে!')">লিংক কপি করুন</button>
     </div>
   </section>
@@ -236,77 +240,103 @@
   </div>
 </div>
 
-<!-- Premium Admin Dashboard (In-App) -->
+<!-- Premium Admin Dashboard -->
 <div class="admin-dashboard-modal" id="adminDashboardModal">
-  <div class="app-wrapper" style="padding-bottom: 40px;">
-    <div class="admin-topbar">
-      <div>
-        <h2 style="font-size: 16px;">TaskBoi অ্যাডমিন প্যানেল</h2>
-        <p style="font-size: 11px; opacity: 0.8;">আফসানা করিম (সুপার অ্যাডমিন)</p>
-      </div>
-      <button onclick="closeAdminPanel()" style="background: #EF4444; color: #fff; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 700; cursor: pointer;">বন্ধ করুন</button>
+  <div class="admin-header-bar">
+    <div>
+      <h2 style="font-size: 17px;">TaskBoi অ্যাডমিন প্যানেল</h2>
+      <p style="font-size: 12px; opacity: 0.85;">শামীম (সুপার অ্যাডমিন)</p>
     </div>
-
-    <!-- Admin Tabs -->
-    <div class="admin-tabs">
-      <button class="admin-tab-btn active" onclick="switchAdminTab('pane-dash', this)">📊 ড্যাশবোর্ড</button>
-      <button class="admin-tab-btn" onclick="switchAdminTab('pane-tasks', this)">💼 টাস্ক ম্যানেজার</button>
-      <button class="admin-tab-btn" onclick="switchAdminTab('pane-withdraw', this)">💳 পেমেন্ট রিকোয়েস্ট</button>
-    </div>
-
-    <!-- 1. Dashboard Pane -->
-    <div class="admin-content-pane active" id="pane-dash">
-      <div class="card-box" style="margin: 0 0 16px 0;">
-        <h3 style="font-size: 15px; margin-bottom: 10px;">ওভারভিউ</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <div style="background: #F8FAF9; padding: 14px; border-radius: 12px;">
-            <div style="font-size: 11px; color: var(--text-muted);">মোট ইউজার</div>
-            <div style="font-family: 'Plus Jakarta Sans'; font-size: 20px; font-weight: 800; color: var(--primary);">১২,৮৪০</div>
-          </div>
-          <div style="background: #F8FAF9; padding: 14px; border-radius: 12px;">
-            <div style="font-size: 11px; color: var(--text-muted);">পেন্ডিং উইথড্র</div>
-            <div style="font-family: 'Plus Jakarta Sans'; font-size: 20px; font-weight: 800; color: var(--accent);">৳ ৫৮,২০০</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. Task Manager Pane -->
-    <div class="admin-content-pane" id="pane-tasks">
-      <div class="card-box" style="margin: 0 0 16px 0;">
-        <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--primary);">নতুন টাস্ক পাবলিশ করুন</h3>
-        <div class="input-field-group">
-          <label>টাস্কের শিরোনাম</label>
-          <input type="text" id="adminTaskTitle" placeholder="যেমন: টেলিগ্রাম চ্যানেল জয়েন করুন">
-        </div>
-        <div class="input-field-group">
-          <label>পুরস্কার (টাকা)</label>
-          <input type="number" id="adminTaskReward" placeholder="15">
-        </div>
-        <div class="input-field-group">
-          <label>কাজের লিংক</label>
-          <input type="url" id="adminTaskLink" placeholder="https://t.me/...">
-        </div>
-        <button class="action-btn" style="background: var(--primary-gradient); color: #fff;" onclick="adminAddNewTask()">টাস্ক লাইভ করুন</button>
-      </div>
-
-      <div class="card-box" style="margin: 0;">
-        <h3 style="font-size: 15px; margin-bottom: 12px;">সক্রিয় টাস্ক লিস্ট</h3>
-        <div id="adminTaskListContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
-      </div>
-    </div>
-
-    <!-- 3. Withdraw Requests Pane -->
-    <div class="admin-content-pane" id="pane-withdraw">
-      <div class="card-box" style="margin: 0;">
-        <h3 style="font-size: 15px; margin-bottom: 12px;">ইউজার উইথড্র লিস্ট</h3>
-        <div style="background: #F8FAF9; padding: 14px; border-radius: 12px; font-size: 13px; color: var(--text-muted); text-align: center;">
-          কোনো নতুন পেন্ডিং রিকোয়েস্ট নেই
-        </div>
-      </div>
-    </div>
-
+    <button onclick="closeAdminPanel()" style="background: #EF4444; color: #fff; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 700; cursor: pointer;">বন্ধ করুন</button>
   </div>
+
+  <!-- Horizontal Tabs -->
+  <div class="admin-nav-tabs">
+    <button class="admin-tab-btn active" onclick="switchAdminPane('pane-dash', this)">📊 ড্যাশবোর্ড</button>
+    <button class="admin-tab-btn" onclick="switchAdminPane('pane-users', this)">👥 ইউজার ম্যানেজমেন্ট</button>
+    <button class="admin-tab-btn" onclick="switchAdminPane('pane-tasks', this)">📋 টাস্ক ভেরিফিকেশন</button>
+    <button class="admin-tab-btn" onclick="switchAdminPane('pane-payments', this)">💳 পেমেন্ট ম্যানেজমেন্ট</button>
+    <button class="admin-tab-btn" onclick="switchAdminPane('pane-campaigns', this)">📢 ক্যাম্পেইন / টাস্ক</button>
+  </div>
+
+  <!-- 1. Dashboard Pane -->
+  <div class="admin-pane active" id="pane-dash">
+    <div class="admin-stats-grid">
+      <div class="admin-stat-card">
+        <div class="s-label">মোট ইউজার</div>
+        <div class="s-val" id="adminTotalUsers">০ জন</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="s-label">সক্রিয় টাস্ক</div>
+        <div class="s-val" id="adminActiveTasksCount">০ টি</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="s-label">পেন্ডিং উইথড্র</div>
+        <div class="s-val" id="adminPendingWithdraw">৳ ০</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="s-label">আজকের রেভিনিউ</div>
+        <div class="s-val">৳ ০</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. User Management Pane -->
+  <div class="admin-pane" id="pane-users">
+    <div class="card-box" style="margin: 0;">
+      <h3 style="font-size: 15px; margin-bottom: 10px;">রেজিস্টার্ড ইউজার তালিকা</h3>
+      <div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px;">
+        বর্তমানে কোনো নতুন ইউজার রেজিস্টার করেনি (০)
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Task Verification Pane -->
+  <div class="admin-pane" id="pane-tasks">
+    <div class="card-box" style="margin: 0;">
+      <h3 style="font-size: 15px; margin-bottom: 10px;">টাস্ক প্রুফ সাবমিশন</h3>
+      <div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px;">
+        কোনো পেন্ডিং প্রুফ নেই
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Payment Management Pane -->
+  <div class="admin-pane" id="pane-payments">
+    <div class="card-box" style="margin: 0;">
+      <h3 style="font-size: 15px; margin-bottom: 10px;">উইথড্র রিকোয়েস্ট লিস্ট</h3>
+      <div style="font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px;" id="adminWithdrawList">
+        কোনো পেমেন্ট রিকোয়েস্ট নেই
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Campaigns / Add & Edit Task Pane -->
+  <div class="admin-pane" id="pane-campaigns">
+    <div class="card-box" style="margin-bottom: 16px;">
+      <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--primary);" id="formTitle">নতুন টাস্ক পাবলিশ করুন</h3>
+      <input type="hidden" id="editTaskId" value="">
+      <div class="input-field-group">
+        <label>টাস্কের শিরোনাম</label>
+        <input type="text" id="adminTaskTitle" placeholder="যেমন: টেলিগ্রাম চ্যানেল জয়েন করুন">
+      </div>
+      <div class="input-field-group">
+        <label>পুরস্কার (টাকা) — পরিবর্তন করতে পারেন</label>
+        <input type="number" id="adminTaskReward" placeholder="15">
+      </div>
+      <div class="input-field-group">
+        <label>কাজের লিংক</label>
+        <input type="url" id="adminTaskLink" placeholder="https://t.me/...">
+      </div>
+      <button class="action-btn" id="saveTaskBtn" style="background: var(--primary-gradient); color: #fff;" onclick="adminSaveTask()">টাস্ক লাইভ করুন</button>
+    </div>
+
+    <div class="card-box">
+      <h3 style="font-size: 15px; margin-bottom: 12px;">টাস্ক ম্যানেজ ও এডিট করুন</h3>
+      <div id="adminTaskListContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -369,9 +399,10 @@
     });
 
     document.getElementById('taskCountBadge').innerText = `${activeCount}টি বাকি`;
+    document.getElementById('adminActiveTasksCount').innerText = `${tasks.length} টি`;
   }
 
-  // 30 Sec Timer
+  // 30 Sec Timer Logic
   let activeTaskId = null;
   let activeTaskReward = 0;
   let timerInterval = null;
@@ -418,6 +449,8 @@
   }
 
   // Minimum 550 BDT Withdrawal Rule
+  let pendingWithdrawals = JSON.parse(localStorage.getItem('taskboi_withdraws')) || [];
+
   function requestWithdrawal() {
     const amt = parseFloat(document.getElementById('withdrawAmount').value);
     const num = document.getElementById('payNumber').value.trim();
@@ -435,10 +468,17 @@
       return;
     }
 
-    Telegram.WebApp.showAlert('✅ উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে! ২৪ ঘণ্টার মধ্যে প্রসেস করা হবে।');
     userBalance -= amt;
     localStorage.setItem('taskboi_balance', userBalance);
+
+    pendingWithdrawals.push({ id: Date.now(), amount: amt, number: num, time: new Date().toLocaleDateString() });
+    localStorage.setItem('taskboi_withdraws', JSON.stringify(pendingWithdrawals));
+
     updateUI();
+    loadAdminWithdraws();
+    Telegram.WebApp.showAlert('✅ উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে! ২৪ ঘণ্টার মধ্যে প্রসেস করা হবে।');
+    document.getElementById('withdrawAmount').value = '';
+    document.getElementById('payNumber').value = '';
   }
 
   // Admin Security & Navigation
@@ -447,6 +487,7 @@
     if(pin === '1234') {
       document.getElementById('adminDashboardModal').style.display = 'block';
       loadAdminTasks();
+      loadAdminWithdraws();
     } else if(pin !== null) {
       Telegram.WebApp.showAlert('ভুল পিন!');
     }
@@ -456,8 +497,8 @@
     document.getElementById('adminDashboardModal').style.display = 'none';
   }
 
-  function switchAdminTab(paneId, btnEl) {
-    document.querySelectorAll('.admin-content-pane').forEach(p => p.classList.remove('active'));
+  function switchAdminPane(paneId, btnEl) {
+    document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
     document.getElementById(paneId).classList.add('active');
     document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
     btnEl.classList.add('active');
@@ -478,15 +519,33 @@
         <div style="background: #F8FAF9; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #E2E8F0;">
           <div>
             <div style="font-weight: 700; font-size: 14px;">${task.title}</div>
-            <div style="font-size: 12px; color: var(--primary);">৳ ${task.reward}</div>
+            <div style="font-size: 12px; color: var(--primary);">পুরস্কার: ৳ ${task.reward}</div>
           </div>
-          <button style="background: rgba(239,68,68,0.1); color: var(--danger); border: none; padding: 6px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;" onclick="deleteTask(${task.id})">রিমুভ</button>
+          <div style="display: flex; gap: 6px;">
+            <button style="background: rgba(217,119,6,0.1); color: var(--accent); border: none; padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer;" onclick="editTask(${task.id})">এডিট</button>
+            <button style="background: rgba(239,68,68,0.1); color: var(--danger); border: none; padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer;" onclick="deleteTask(${task.id})">ডিলিট</button>
+          </div>
         </div>
       `;
     });
   }
 
-  function adminAddNewTask() {
+  // Edit Task Functionality
+  function editTask(id) {
+    let tasks = getTasks();
+    let task = tasks.find(t => t.id === id);
+    if(task) {
+      document.getElementById('editTaskId').value = task.id;
+      document.getElementById('adminTaskTitle').value = task.title;
+      document.getElementById('adminTaskReward').value = task.reward;
+      document.getElementById('adminTaskLink').value = task.link;
+      document.getElementById('formTitle').innerText = 'টাস্ক এডিট করুন (Update Task)';
+      document.getElementById('saveTaskBtn').innerText = 'পরিবর্তন সেভ করুন';
+    }
+  }
+
+  function adminSaveTask() {
+    const editId = document.getElementById('editTaskId').value;
     const title = document.getElementById('adminTaskTitle').value.trim();
     const reward = parseFloat(document.getElementById('adminTaskReward').value);
     const link = document.getElementById('adminTaskLink').value.trim();
@@ -497,15 +556,61 @@
     }
 
     let tasks = getTasks();
-    tasks.push({ id: Date.now(), title, reward, icon: '💼', link });
+
+    if(editId) {
+      // Update existing task
+      tasks = tasks.map(t => t.id == editId ? { ...t, title, reward, link } : t);
+      Telegram.WebApp.showAlert('টাস্ক সফলভাবে আপডেট করা হয়েছে!');
+    } else {
+      // Add new task
+      tasks.push({ id: Date.now(), title, reward, icon: '💼', link });
+      Telegram.WebApp.showAlert('নতুন টাস্ক সফলভাবে লাইভ করা হয়েছে!');
+    }
+
     localStorage.setItem('taskboi_custom_tasks', JSON.stringify(tasks));
     updateUI();
     loadAdminTasks();
 
-    Telegram.WebApp.showAlert('টাস্ক সফলভাবে লাইভ করা হয়েছে!');
+    // Reset form
+    document.getElementById('editTaskId').value = '';
     document.getElementById('adminTaskTitle').value = '';
     document.getElementById('adminTaskReward').value = '';
     document.getElementById('adminTaskLink').value = '';
+    document.getElementById('formTitle').innerText = 'নতুন টাস্ক পাবলিশ করুন';
+    document.getElementById('saveTaskBtn').innerText = 'টাস্ক লাইভ করুন';
+  }
+
+  function loadAdminWithdraws() {
+    const list = JSON.parse(localStorage.getItem('taskboi_withdraws')) || [];
+    const container = document.getElementById('adminWithdrawList');
+    container.innerHTML = '';
+
+    let totalPendingAmount = 0;
+    list.forEach(item => {
+      totalPendingAmount += item.amount;
+      container.innerHTML += `
+        <div style="background: #F8FAF9; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #E2E8F0; margin-bottom: 8px;">
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">নম্বর: ${item.number}</div>
+            <div style="font-size: 13px; color: var(--accent); font-weight: 700;">টাকা: ৳ ${item.amount}</div>
+          </div>
+          <button style="background: rgba(4,120,87,0.1); color: var(--primary); border: none; padding: 6px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;" onclick="approveWithdraw(${item.id})">পেইড করুন</button>
+        </div>
+      `;
+    });
+
+    if(list.length === 0) {
+      container.innerHTML = `<div style="font-size: 13px; color: var(--text-muted); text-align: center;">কোনো পেমেন্ট রিকোয়েস্ট নেই</div>`;
+    }
+    document.getElementById('adminPendingWithdraw').innerText = `৳ ${totalPendingAmount}`;
+  }
+
+  function approveWithdraw(id) {
+    let list = JSON.parse(localStorage.getItem('taskboi_withdraws')) || [];
+    list = list.filter(i => i.id !== id);
+    localStorage.setItem('taskboi_withdraws', JSON.stringify(list));
+    loadAdminWithdraws();
+    Telegram.WebApp.showAlert('পেমেন্ট সফলভাবে পেইড করা হয়েছে!');
   }
 
   function deleteTask(id) {
@@ -539,4 +644,4 @@
   updateUI();
 </script>
 </body>
-  </html>
+</html>
