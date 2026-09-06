@@ -141,10 +141,10 @@
 
     <div class="section-header">
       <h3>উপলব্ধ টাস্কসমূহ</h3>
-      <span class="badge-pill">২টি বাকি</span>
+      <span class="badge-pill" id="taskCountBadge">টাস্ক লোড হচ্ছে</span>
     </div>
     <div class="task-container" id="taskListContainer">
-      <!-- Dynamic Tasks Loaded via Script -->
+      <!-- Dynamic Tasks Loaded from Admin Panel -->
     </div>
   </section>
 
@@ -257,28 +257,36 @@
       }
   }
 
-  // App State & Task System
+  // Dynamic Tasks Integration from Admin Panel
   let userBalance = parseFloat(localStorage.getItem('taskboi_balance')) || 0;
   let completedTasks = JSON.parse(localStorage.getItem('taskboi_completed')) || [];
 
-  const tasks = [
+  const defaultTasks = [
     { id: 1, title: 'টেলিগ্রাম চ্যানেল জয়েন করুন', reward: 5, icon: '📢', link: 'https://t.me/telegram' },
     { id: 2, title: 'ইউটিউব ভিডিও সাবস্ক্রাইব করুন', reward: 10, icon: '▶️', link: 'https://youtube.com' }
   ];
+
+  function getTasks() {
+    return JSON.parse(localStorage.getItem('taskboi_custom_tasks')) || defaultTasks;
+  }
 
   function updateUI() {
     document.getElementById('totalBalance').innerHTML = `৳ ${userBalance}<span style="font-size: 22px; opacity: 0.8;">.০০</span>`;
     document.getElementById('walletBalance').innerHTML = `৳ ${userBalance}<span style="font-size: 22px; opacity: 0.8;">.০০</span>`;
     document.getElementById('todayEarnings').innerText = `৳ ${userBalance}`;
 
+    const tasks = getTasks();
     const container = document.getElementById('taskListContainer');
     container.innerHTML = '';
 
+    let activeCount = 0;
     tasks.forEach(task => {
       const isDone = completedTasks.includes(task.id);
+      if(!isDone) activeCount++;
+      
       container.innerHTML += `
         <div class="task-item">
-          <div class="task-icon-box">${task.icon}</div>
+          <div class="task-icon-box">${task.icon || '💼'}</div>
           <div class="task-info">
             <h4>${task.title}</h4>
             <div class="reward">৳ ${task.reward}.০০</div>
@@ -290,6 +298,8 @@
         </div>
       `;
     });
+
+    document.getElementById('taskCountBadge').innerText = `${activeCount}টি বাকি`;
   }
 
   function completeTask(id, reward, link) {
