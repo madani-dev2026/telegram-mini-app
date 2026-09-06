@@ -3,31 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>TaskBoi - Micro Task Platform</title>
+<title>TaskBoi - Premium Micro Task Platform</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-app: #F4F6F9;
-    --surface: #FFFFFF;
-    --text-main: #0F172A;
-    --text-muted: #64748B;
-    --primary: #059669;
-    --primary-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
+    --bg-app: #070B14;
+    --surface: #131C2E;
+    --surface-glass: rgba(19, 28, 46, 0.75);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --primary: #10B981;
+    --primary-gradient: linear-gradient(135deg, #10B981 0%, #059669 100%);
     --accent: #F59E0B;
-    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --danger: #EF4444;
+    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
     --radius-lg: 24px;
     --radius-md: 16px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-app: #0B0F19;
-      --surface: #1E293B;
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    }
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -39,33 +31,33 @@
   /* Top Header */
   .app-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 10px; }
   .profile-box { display: flex; align-items: center; gap: 14px; }
-  .avatar-ring { width: 50px; height: 50px; border-radius: 50%; background: var(--primary-gradient); padding: 2px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2); }
+  .avatar-ring { width: 50px; height: 50px; border-radius: 50%; background: var(--primary-gradient); padding: 2px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
   .avatar-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; color: var(--primary); overflow: hidden; }
   .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
   .user-details h2 { font-size: 17px; font-weight: 700; color: var(--text-main); line-height: 1.2; }
-  .user-details p { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+  .user-details p { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 2px; }
 
-  .notification-bell { width: 44px; height: 44px; background: var(--surface); border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: var(--card-shadow); cursor: pointer; position: relative; font-size: 18px; border: 1px solid rgba(255,255,255,0.1); }
-  .notification-bell span { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background: #EF4444; border-radius: 50%; }
+  .notification-bell { width: 44px; height: 44px; background: var(--surface); border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: var(--card-shadow); cursor: pointer; position: relative; font-size: 18px; border: 1px solid rgba(255,255,255,0.05); }
+  .notification-bell span { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; }
 
-  /* Balance Card */
-  .wallet-card { background: var(--primary-gradient); color: #fff; margin: 16px 20px; padding: 24px; border-radius: var(--radius-lg); box-shadow: 0 15px 35px rgba(5, 150, 105, 0.25); position: relative; overflow: hidden; }
-  .wallet-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.08); border-radius: 50%; }
-  .wallet-card .label { font-size: 13px; opacity: 0.85; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  /* Wallet Card */
+  .wallet-card { background: var(--primary-gradient); color: #fff; margin: 16px 20px; padding: 24px; border-radius: var(--radius-lg); box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25); position: relative; overflow: hidden; }
+  .wallet-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+  .wallet-card .label { font-size: 13px; opacity: 0.9; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
   .wallet-card .balance-amount { font-family: 'Plus Jakarta Sans'; font-size: 36px; font-weight: 800; line-height: 1.2; margin: 6px 0 18px; }
   
   .wallet-metrics { display: flex; gap: 12px; margin-bottom: 20px; }
-  .metric-pill { flex: 1; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
+  .metric-pill { flex: 1; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(8px); padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
   .metric-pill .m-label { font-size: 11px; opacity: 0.8; margin-bottom: 2px; }
-  .metric-pill .m-value { font-family: 'Plus Jakarta Sans'; font-size: 18px; font-weight: 700; }
+  .metric-pill .m-value { font-family: 'Plus Jakarta Sans'; font-size: 18px; font-weight: 700; color: #fff; }
 
-  .action-btn { width: 100%; background: #ffffff; color: var(--primary); border: none; padding: 14px; border-radius: 14px; font-family: 'Plus Jakarta Sans'; font-weight: 700; font-size: 15px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.2s; }
+  .action-btn { width: 100%; background: #ffffff; color: #070B14; border: none; padding: 14px; border-radius: 14px; font-family: 'Plus Jakarta Sans'; font-weight: 700; font-size: 15px; cursor: pointer; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s; }
   .action-btn:active { transform: scale(0.98); }
 
   /* Section Title */
   .section-header { padding: 10px 20px 14px; display: flex; justify-content: space-between; align-items: center; }
   .section-header h3 { font-size: 18px; font-weight: 700; color: var(--text-main); }
-  .section-header .badge-pill { background: rgba(5, 150, 105, 0.1); color: var(--primary); font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+  .section-header .badge-pill { background: rgba(16, 185, 129, 0.15); color: var(--primary); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(16,185,129,0.3); }
 
   /* Views Management */
   .view-section { display: none; }
@@ -74,29 +66,40 @@
 
   /* Task Cards */
   .task-container { padding: 0 20px; display: flex; flex-direction: column; gap: 14px; }
-  .task-item { background: var(--surface); border-radius: var(--radius-md); padding: 18px; display: flex; align-items: center; gap: 16px; box-shadow: var(--card-shadow); border: 1px solid rgba(0,0,0,0.02); }
-  .task-icon-box { width: 52px; height: 52px; border-radius: 16px; background: rgba(5, 150, 105, 0.08); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .task-item { background: var(--surface); border-radius: var(--radius-md); padding: 18px; display: flex; align-items: center; gap: 16px; box-shadow: var(--card-shadow); border: 1px solid rgba(255,255,255,0.04); }
+  .task-icon-box { width: 52px; height: 52px; border-radius: 16px; background: rgba(16, 185, 129, 0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
   .task-info { flex: 1; }
   .task-info h4 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
   .task-info .reward { font-family: 'Plus Jakarta Sans'; font-weight: 800; color: var(--primary); font-size: 16px; }
-  .task-action-btn { background: var(--primary-gradient); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(5,150,105,0.2); }
-  .task-action-btn.completed { background: #94A3B8; cursor: not-allowed; box-shadow: none; }
+  .task-action-btn { background: var(--primary-gradient); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+  .task-action-btn.completed { background: #334155; color: var(--text-muted); cursor: not-allowed; box-shadow: none; }
 
   /* Universal Card Box */
-  .card-box { background: var(--surface); margin: 0 20px; padding: 22px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow); }
+  .card-box { background: var(--surface); margin: 0 20px; padding: 22px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow); border: 1px solid rgba(255,255,255,0.04); }
   .input-field-group { margin-bottom: 16px; text-align: left; }
   .input-field-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .input-field-group input, .input-field-group select { width: 100%; background: var(--bg-app); border: 1px solid rgba(100,116,139,0.2); color: var(--text-main); padding: 14px; border-radius: 14px; font-family: 'Hind Siliguri'; font-size: 15px; outline: none; transition: border-color 0.2s; }
+  .input-field-group input, .input-field-group select { width: 100%; background: #070B14; border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); padding: 14px; border-radius: 14px; font-family: 'Hind Siliguri'; font-size: 15px; outline: none; transition: border-color 0.2s; }
   .input-field-group input:focus { border-color: var(--primary); }
 
   /* Profile Menu List */
-  .menu-group { background: var(--surface); margin: 0 20px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--card-shadow); }
-  .menu-row { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(100,116,139,0.08); font-weight: 600; font-size: 15px; cursor: pointer; color: var(--text-main); }
+  .menu-group { background: var(--surface); margin: 0 20px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--card-shadow); border: 1px solid rgba(255,255,255,0.04); }
+  .menu-row { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600; font-size: 15px; cursor: pointer; color: var(--text-main); }
   .menu-row:last-child { border-bottom: none; }
-  .menu-row.logout { color: #EF4444; }
+  .menu-row.logout { color: var(--danger); }
+
+  /* Premium Timer Modal */
+  .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(7, 11, 20, 0.85); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+  .modal-box { background: var(--surface); width: 100%; max-width: 360px; padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.6); border: 1px solid rgba(16,185,129,0.3); animation: scaleUp 0.3s ease; }
+  @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .timer-circle { width: 80px; height: 80px; border-radius: 50%; background: rgba(16,185,129,0.1); border: 3px solid var(--primary); display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans'; font-size: 26px; font-weight: 800; color: var(--primary); margin: 0 auto 16px; }
+
+  /* Premium Admin Panel Overlay */
+  .admin-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-app); display: none; z-index: 2000; overflow-y: auto; padding: 20px; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px; }
+  .admin-close { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
   /* Bottom Navigation Bar */
-  .bottom-navigation { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 12px 0 20px; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05); z-index: 100; border-top: 1px solid rgba(100,116,139,0.08); }
+  .bottom-navigation { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 12px 0 20px; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5); z-index: 100; border-top: 1px solid rgba(255,255,255,0.05); }
   .nav-button { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); gap: 4px; font-size: 11px; font-weight: 600; flex: 1; border: none; background: none; cursor: pointer; transition: color 0.2s; }
   .nav-button .icon { font-size: 22px; }
   .nav-button.active { color: var(--primary); }
@@ -113,10 +116,10 @@
       </div>
       <div class="user-details">
         <h2 id="userNameContainer">শামীম হাসান</h2>
-        <p>⭐ লেভেল ১ (Starter)</p>
+        <p>⭐ ভিআইপি মেম্বার</p>
       </div>
     </div>
-    <div class="notification-bell" onclick="Telegram.WebApp.showAlert('কোনো নতুন নোটিফিকেশন নেই!')">
+    <div class="notification-bell" onclick="Telegram.WebApp.showAlert('আপনার কোনো নোটিফিকেশন নেই!')">
       🔔<span></span>
     </div>
   </header>
@@ -132,8 +135,8 @@
           <div class="m-value" id="todayEarnings">৳ ০</div>
         </div>
         <div class="metric-pill">
-          <div class="m-label">পেন্ডিং</div>
-          <div class="m-value">৳ ০</div>
+          <div class="m-label">মিনিমাম উইথড্র</div>
+          <div class="m-value" style="color: var(--accent);">৳ ৫৫০</div>
         </div>
       </div>
       <button class="action-btn" onclick="switchTab('view-wallet')">টাকা উত্তোলন করুন</button>
@@ -144,22 +147,25 @@
       <span class="badge-pill" id="taskCountBadge">টাস্ক লোড হচ্ছে</span>
     </div>
     <div class="task-container" id="taskListContainer">
-      <!-- Dynamic Tasks Loaded from Admin Panel -->
+      <!-- Dynamic Tasks -->
     </div>
   </section>
 
   <!-- 2. WALLET VIEW -->
   <section class="view-section" id="view-wallet">
     <div class="section-header" style="padding-top: 15px;">
-      <h3>ওয়ালেট ও পেমেন্ট</h3>
+      <h3>ওয়ালেট ও উইথড্র</h3>
     </div>
     <div class="wallet-card" style="margin-top: 0;">
       <div class="label">উইথড্রযোগ্য ব্যালেন্স</div>
       <div class="balance-amount" id="walletBalance" style="margin-bottom: 0;">৳ ০<span style="font-size: 22px; opacity: 0.8;">.০০</span></div>
     </div>
     <div class="card-box">
+      <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 12px 14px; border-radius: 12px; margin-bottom: 16px; font-size: 13px; color: var(--accent);">
+        ⚠️ নুন্যতম উইথড্র লিমিট: <b>৫৫০ টাকা</b>। এর কম হলে রিকোয়েস্ট গ্রহণ করা হবে না।
+      </div>
       <div class="input-field-group">
-        <label>পেমেন্ট মাধ্যম সিলেক্ট করুন</label>
+        <label>পেমেন্ট মাধ্যম</label>
         <select id="payMethod">
           <option>বিকাশ (Personal)</option>
           <option>নগদ (Personal)</option>
@@ -179,16 +185,16 @@
       <h3>রেফারেল প্রোগ্রাম</h3>
     </div>
     <div class="card-box" style="text-align: center;">
-      <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;">আপনার ইউনিক রেফারেল কোড</div>
-      <div style="background: rgba(5,150,105,0.08); color: var(--primary); font-family: 'Plus Jakarta Sans'; font-size: 24px; font-weight: 800; padding: 14px; border-radius: 14px; margin: 12px 0; border: 2px dashed var(--primary); letter-spacing: 1px;">TASKBOI2026</div>
+      <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;">আপনার ইউনিক রেফারেল লিংক</div>
+      <div style="background: rgba(16,185,129,0.08); color: var(--primary); font-family: 'Plus Jakarta Sans'; font-size: 15px; font-weight: 800; padding: 14px; border-radius: 14px; margin: 12px 0; border: 2px dashed var(--primary); word-break: break-all;">https://t.me/taskboid_bot?start=ref_shamim</div>
       <button class="action-btn" style="background: var(--primary-gradient); color: #fff; margin-bottom: 20px;" onclick="Telegram.WebApp.showAlert('রেফারেল লিংক সফলভাবে কপি করা হয়েছে!')">লিংক কপি করুন</button>
       
-      <div style="display: flex; gap: 12px; border-top: 1px solid rgba(100,116,139,0.1); padding-top: 16px;">
-        <div style="flex: 1; background: var(--bg-app); padding: 12px; border-radius: 12px;">
+      <div style="display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">
+        <div style="flex: 1; background: #070B14; padding: 12px; border-radius: 12px;">
           <div style="font-size: 11px; color: var(--text-muted);">মোট রেফার</div>
           <div style="font-family: 'Plus Jakarta Sans'; font-size: 18px; font-weight: 700; color: var(--primary);">০ জন</div>
         </div>
-        <div style="flex: 1; background: var(--bg-app); padding: 12px; border-radius: 12px;">
+        <div style="flex: 1; background: #070B14; padding: 12px; border-radius: 12px;">
           <div style="font-size: 11px; color: var(--text-muted);">রেফার বোনাস</div>
           <div style="font-family: 'Plus Jakarta Sans'; font-size: 18px; font-weight: 700; color: var(--primary);">৳ ০</div>
         </div>
@@ -206,20 +212,20 @@
         <div class="avatar-inner" id="profileAvatarContainer" style="font-size: 28px;">শ</div>
       </div>
       <h3 id="profileNameContainer" style="font-size: 18px; font-weight: 700;">শামীম হাসান</h3>
-      <p style="font-size: 13px; color: var(--text-muted); font-weight: 600; margin-top: 4px;">স্টার্টার মেম্বার</p>
+      <p style="font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 4px;">ভেরিফাইড মেম্বার</p>
     </div>
     
     <div class="menu-group">
-      <div class="menu-row" onclick="Telegram.WebApp.showAlert('ডার্ক মোড আপনার ডিভাইসের থিমের সাথে স্বয়ংক্রিয়ভাবে কাজ করে!')">
+      <div class="menu-row" onclick="Telegram.WebApp.showAlert('ডার্ক মোড সক্রিয় রয়েছে।')">
         <span>সিস্টেম থিম মোড</span>
         <span style="color: var(--text-muted);">➔</span>
       </div>
-      <div class="menu-row" onclick="Telegram.WebApp.showAlert('নোটিফিকেশন অ্যালার্ট সক্রিয় রয়েছে।')">
+      <div class="menu-row" onclick="Telegram.WebApp.showAlert('নোটিফিকেশন অ্যালার্ট অন আছে।')">
         <span>নোটিফিকেশন সেটিংস</span>
         <span style="color: var(--text-muted);">➔</span>
       </div>
-      <div class="menu-row" onclick="Telegram.WebApp.showAlert('অফিসিয়াল সাপোর্টের জন্য অ্যাডমিনের সাথে যোগাযোগ করুন।')">
-        <span>সাপোর্ট সেন্টার</span>
+      <div class="menu-row" onclick="openAdminDashboard()">
+        <span>🛡️ অ্যাডমিন কন্ট্রোল প্যানেল</span>
         <span style="color: var(--text-muted);">➔</span>
       </div>
       <div class="menu-row logout" onclick="Telegram.WebApp.showAlert('সফলভাবে লগআউট সম্পন্ন হয়েছে!')">
@@ -237,6 +243,50 @@
     <button class="nav-button" onclick="switchTab('view-profile', this)"><span class="icon">👤</span>প্রোফাইল</button>
   </nav>
 
+</div>
+
+<!-- Timer Verification Modal -->
+<div class="modal-overlay" id="timerModal">
+  <div class="modal-box">
+    <h3 style="margin-bottom: 8px; font-size: 18px;">টাস্ক ভেরিফিকেশন</h3>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">দয়া করে ৩০ সেকেন্ড অপেক্ষা করুন এবং চ্যানেল/লিংক ভিজিট করুন...</p>
+    <div class="timer-circle" id="timerCount">30</div>
+    <button class="action-btn" id="claimRewardBtn" style="background: #334155; color: #94A3B8; cursor: not-allowed;" disabled onclick="claimTaskReward()">পুরস্কার গ্রহণ করুন</button>
+  </div>
+</div>
+
+<!-- Premium Full-Screen Admin Dashboard -->
+<div class="admin-modal" id="adminDashboardModal">
+  <div class="app-wrapper">
+    <div class="admin-header">
+      <h2 style="font-size: 18px; color: var(--primary);">🛡️ প্রিমিয়াম অ্যাডমিন প্যানেল</h2>
+      <button class="admin-close" onclick="closeAdminDashboard()">বন্ধ করুন</button>
+    </div>
+
+    <div class="card-box" style="margin: 0 0 16px 0;">
+      <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--accent);">নতুন টাস্ক পাবলিশ করুন</h3>
+      <div class="input-field-group">
+        <label>টাস্কের শিরোনাম</label>
+        <input type="text" id="adminTaskTitle" placeholder="যেমন: টেলিগ্রাম চ্যানেল জয়েন করুন">
+      </div>
+      <div class="input-field-group">
+        <label>পুরস্কার (টাকা)</label>
+        <input type="number" id="adminTaskReward" placeholder="10">
+      </div>
+      <div class="input-field-group">
+        <label>কাজের লিংক</label>
+        <input type="url" id="adminTaskLink" placeholder="https://t.me/...">
+      </div>
+      <button class="action-btn" style="background: var(--primary-gradient); color: #fff;" onclick="adminAddNewTask()">টাস্ক লাইভ করুন</button>
+    </div>
+
+    <div class="card-box" style="margin: 0;">
+      <h3 style="font-size: 15px; margin-bottom: 12px;">টাস্ক ম্যানেজমেন্ট ও রিমুভ</h3>
+      <div id="adminTaskListContainer" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Admin Task List -->
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -257,13 +307,12 @@
       }
   }
 
-  // Dynamic Tasks Integration from Admin Panel
   let userBalance = parseFloat(localStorage.getItem('taskboi_balance')) || 0;
   let completedTasks = JSON.parse(localStorage.getItem('taskboi_completed')) || [];
 
   const defaultTasks = [
-    { id: 1, title: 'টেলিগ্রাম চ্যানেল জয়েন করুন', reward: 5, icon: '📢', link: 'https://t.me/telegram' },
-    { id: 2, title: 'ইউটিউব ভিডিও সাবস্ক্রাইব করুন', reward: 10, icon: '▶️', link: 'https://youtube.com' }
+    { id: 1, title: 'অফিসিয়াল টেলিগ্রাম চ্যানেল জয়েন করুন', reward: 15, icon: '📢', link: 'https://t.me/telegram' },
+    { id: 2, title: 'ইউটিউব চ্যানেল সাবস্ক্রাইব করুন', reward: 25, icon: '▶️', link: 'https://youtube.com' }
   ];
 
   function getTasks() {
@@ -292,7 +341,7 @@
             <div class="reward">৳ ${task.reward}.০০</div>
           </div>
           <button class="task-action-btn ${isDone ? 'completed' : ''}" 
-                  onclick="${isDone ? '' : `completeTask(${task.id}, ${task.reward}, '${task.link}')`}">
+                  onclick="${isDone ? '' : `startTaskTimer(${task.id}, ${task.reward}, '${task.link}')`}">
             ${isDone ? 'সম্পন্ন হয়েছে' : 'শুরু করুন'}
           </button>
         </div>
@@ -302,32 +351,144 @@
     document.getElementById('taskCountBadge').innerText = `${activeCount}টি বাকি`;
   }
 
-  function completeTask(id, reward, link) {
+  // Timer Verification Logic (30 Seconds requirement)
+  let activeTaskId = null;
+  let activeTaskReward = 0;
+  let timerInterval = null;
+
+  function startTaskTimer(id, reward, link) {
     window.open(link, '_blank');
-    setTimeout(() => {
-      userBalance += reward;
-      completedTasks.push(id);
-      localStorage.setItem('taskboi_balance', userBalance);
-      localStorage.setItem('taskboi_completed', JSON.stringify(completedTasks));
-      updateUI();
-      Telegram.WebApp.showAlert(`অভিনন্দন! আপনি ${reward} টাকা অর্জন করেছেন।`);
-    }, 1500);
+    activeTaskId = id;
+    activeTaskReward = reward;
+
+    document.getElementById('timerModal').style.display = 'flex';
+    let timeLeft = 30; // ৩০ সেকেন্ড বাধ্যতামূলক
+    document.getElementById('timerCount').innerText = timeLeft;
+    
+    const claimBtn = document.getElementById('claimRewardBtn');
+    claimBtn.style.background = '#334155';
+    claimBtn.style.color = '#94A3B8';
+    claimBtn.style.cursor = 'not-allowed';
+    claimBtn.disabled = true;
+
+    if(timerInterval) clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timerCount').innerText = timeLeft;
+      if(timeLeft <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('timerCount').innerText = '✓';
+        claimBtn.style.background = 'var(--primary-gradient)';
+        claimBtn.style.color = '#fff';
+        claimBtn.style.cursor = 'pointer';
+        claimBtn.disabled = false;
+      }
+    }, 1000);
   }
 
+  function claimTaskReward() {
+    document.getElementById('timerModal').style.display = 'none';
+    userBalance += activeTaskReward;
+    completedTasks.push(activeTaskId);
+    localStorage.setItem('taskboi_balance', userBalance);
+    localStorage.setItem('taskboi_completed', JSON.stringify(completedTasks));
+    updateUI();
+    Telegram.WebApp.showAlert(`অভিনন্দন! সফলভাবে ভেরিফাই হয়ে আপনার অ্যাকাউন্টে ${activeTaskReward} টাকা যোগ হয়েছে।`);
+  }
+
+  // Minimum 550 BDT Withdrawal Rule
   function requestWithdrawal() {
     const num = document.getElementById('payNumber').value.trim();
     if(num.length < 11) {
       Telegram.WebApp.showAlert('দয়া করে সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন!');
       return;
     }
-    if(userBalance < 50) {
-      Telegram.WebApp.showAlert('উইথড্র করার জন্য আপনার অ্যাকাউন্টে কমপক্ষে ৫০ টাকা থাকতে হবে!');
+    if(userBalance < 550) {
+      Telegram.WebApp.showAlert('❌ উইথড্র করতে হলে আপনার অ্যাকাউন্টে কমপক্ষে ৫৫০ টাকা থাকতে হবে!');
       return;
     }
-    Telegram.WebApp.showAlert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!');
-    userBalance = 0;
+    Telegram.WebApp.showAlert('✅ আপনার উইথড্র রিকোয়েস্ট সফলভাবে অ্যাডমিনের কাছে জমা হয়েছে!');
+    userBalance -= 550; // কাট অফ
     localStorage.setItem('taskboi_balance', userBalance);
     updateUI();
+  }
+
+  // Admin Dashboard Security & Controls
+  function openAdminDashboard() {
+    const pin = prompt('নিরাপত্তা পিন (Admin PIN) দিন:');
+    if(pin === '1234') { // সিক্রেট পিন
+      document.getElementById('adminDashboardModal').style.display = 'block';
+      loadAdminTasks();
+    } else if(pin !== null) {
+      Telegram.WebApp.showAlert('ভুল পিন!');
+    }
+  }
+
+  function closeAdminDashboard() {
+    document.getElementById('adminDashboardModal').style.display = 'none';
+  }
+
+  function loadAdminTasks() {
+    const tasks = getTasks();
+    const container = document.getElementById('adminTaskListContainer');
+    container.innerHTML = '';
+
+    if(tasks.length === 0) {
+      container.innerHTML = `<div style="color: var(--text-muted); font-size: 13px; text-align: center;">কোনো টাস্ক নেই</div>`;
+      return;
+    }
+
+    tasks.forEach(task => {
+      container.innerHTML += `
+        <div style="background: #070B14; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 700; font-size: 14px;">${task.title}</div>
+            <div style="font-size: 12px; color: var(--primary);">৳ ${task.reward}</div>
+          </div>
+          <button style="background: rgba(239, 68, 68, 0.15); color: var(--danger); border: none; padding: 6px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;" onclick="deleteTask(${task.id})">রিমুভ</button>
+        </div>
+      `;
+    });
+  }
+
+  function adminAddNewTask() {
+    const title = document.getElementById('adminTaskTitle').value.trim();
+    const reward = parseFloat(document.getElementById('adminTaskReward').value);
+    const link = document.getElementById('adminTaskLink').value.trim();
+
+    if(!title || !reward || !link) {
+      Telegram.WebApp.showAlert('সবগুলো ঘর সঠিকভাবে পূরণ করুন!');
+      return;
+    }
+
+    let tasks = getTasks();
+    const newTask = {
+      id: Date.now(),
+      title: title,
+      reward: reward,
+      icon: '💼',
+      link: link
+    };
+
+    tasks.push(newTask);
+    localStorage.setItem('taskboi_custom_tasks', JSON.stringify(tasks));
+    updateUI();
+    loadAdminTasks();
+
+    Telegram.WebApp.showAlert('টাস্ক সফলভাবে লাইভ করা হয়েছে!');
+    document.getElementById('adminTaskTitle').value = '';
+    document.getElementById('adminTaskReward').value = '';
+    document.getElementById('adminTaskLink').value = '';
+  }
+
+  function deleteTask(id) {
+    let tasks = getTasks();
+    tasks = tasks.filter(t => t.id !== id);
+    localStorage.setItem('taskboi_custom_tasks', JSON.stringify(tasks));
+    updateUI();
+    loadAdminTasks();
+    Telegram.WebApp.showAlert('টাস্ক সফলভাবে রিমুভ করা হয়েছে!');
   }
 
   function switchTab(viewId, btnElement) {
@@ -349,7 +510,6 @@
     window.scrollTo(0, 0);
   }
 
-  // Initial load
   updateUI();
 </script>
 </body>
