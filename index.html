@@ -80,6 +80,7 @@
   .task-info h4 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
   .task-info .reward { font-family: 'Plus Jakarta Sans'; font-weight: 800; color: var(--primary); font-size: 16px; }
   .task-action-btn { background: var(--primary-gradient); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(5,150,105,0.2); }
+  .task-action-btn.completed { background: #94A3B8; cursor: not-allowed; box-shadow: none; }
 
   /* Universal Card Box */
   .card-box { background: var(--surface); margin: 0 20px; padding: 22px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow); }
@@ -124,11 +125,11 @@
   <section class="view-section active" id="view-home">
     <div class="wallet-card">
       <div class="label">মোট মূল ব্যালেন্স</div>
-      <div class="balance-amount">৳ ০<span style="font-size: 22px; opacity: 0.8;">.০০</span></div>
+      <div class="balance-amount" id="totalBalance">৳ ০<span style="font-size: 22px; opacity: 0.8;">.০০</span></div>
       <div class="wallet-metrics">
         <div class="metric-pill">
           <div class="m-label">আজকের আয়</div>
-          <div class="m-value">৳ ০</div>
+          <div class="m-value" id="todayEarnings">৳ ০</div>
         </div>
         <div class="metric-pill">
           <div class="m-label">পেন্ডিং</div>
@@ -140,25 +141,10 @@
 
     <div class="section-header">
       <h3>উপলব্ধ টাস্কসমূহ</h3>
-      <span class="badge-pill">৩টি বাকি</span>
+      <span class="badge-pill">২টি বাকি</span>
     </div>
-    <div class="task-container">
-      <div class="task-item">
-        <div class="task-icon-box">📢</div>
-        <div class="task-info">
-          <h4>টেলিগ্রাম চ্যানেল জয়েন করুন</h4>
-          <div class="reward">৳ ৫.০০</div>
-        </div>
-        <button class="task-action-btn" onclick="Telegram.WebApp.showAlert('টাস্কটি সফলভাবে শুরু হয়েছে!')">শুরু করুন</button>
-      </div>
-      <div class="task-item">
-        <div class="task-icon-box">👥</div>
-        <div class="task-info">
-          <h4>বন্ধুকে আমন্ত্রণ জানান</h4>
-          <div class="reward">৳ ১০.০০</div>
-        </div>
-        <button class="task-action-btn" onclick="switchTab('view-ref')">শেয়ার</button>
-      </div>
+    <div class="task-container" id="taskListContainer">
+      <!-- Dynamic Tasks Loaded via Script -->
     </div>
   </section>
 
@@ -169,21 +155,21 @@
     </div>
     <div class="wallet-card" style="margin-top: 0;">
       <div class="label">উইথড্রযোগ্য ব্যালেন্স</div>
-      <div class="balance-amount" style="margin-bottom: 0;">৳ ০<span style="font-size: 22px; opacity: 0.8;">.০০</span></div>
+      <div class="balance-amount" id="walletBalance" style="margin-bottom: 0;">৳ ০<span style="font-size: 22px; opacity: 0.8;">.০০</span></div>
     </div>
     <div class="card-box">
       <div class="input-field-group">
         <label>পেমেন্ট মাধ্যম সিলেক্ট করুন</label>
-        <select>
+        <select id="payMethod">
           <option>বিকাশ (Personal)</option>
           <option>নগদ (Personal)</option>
         </select>
       </div>
       <div class="input-field-group">
         <label>আপনার মোবাইল নম্বর</label>
-        <input type="text" placeholder="01XXXXXXXXX">
+        <input type="text" id="payNumber" placeholder="01XXXXXXXXX">
       </div>
-      <button class="action-btn" style="background: var(--primary-gradient); color: #fff;" onclick="Telegram.WebApp.showAlert('আপনার ব্যালেন্স পর্যাপ্ত নয়!')">উইথড্র রিকোয়েস্ট পাঠান</button>
+      <button class="action-btn" style="background: var(--primary-gradient); color: #fff;" onclick="requestWithdrawal()">উইথড্র রিকোয়েস্ট পাঠান</button>
     </div>
   </section>
 
@@ -271,6 +257,69 @@
       }
   }
 
+  // App State & Task System
+  let userBalance = parseFloat(localStorage.getItem('taskboi_balance')) || 0;
+  let completedTasks = JSON.parse(localStorage.getItem('taskboi_completed')) || [];
+
+  const tasks = [
+    { id: 1, title: 'টেলিগ্রাম চ্যানেল জয়েন করুন', reward: 5, icon: '📢', link: 'https://t.me/telegram' },
+    { id: 2, title: 'ইউটিউব ভিডিও সাবস্ক্রাইব করুন', reward: 10, icon: '▶️', link: 'https://youtube.com' }
+  ];
+
+  function updateUI() {
+    document.getElementById('totalBalance').innerHTML = `৳ ${userBalance}<span style="font-size: 22px; opacity: 0.8;">.০০</span>`;
+    document.getElementById('walletBalance').innerHTML = `৳ ${userBalance}<span style="font-size: 22px; opacity: 0.8;">.০০</span>`;
+    document.getElementById('todayEarnings').innerText = `৳ ${userBalance}`;
+
+    const container = document.getElementById('taskListContainer');
+    container.innerHTML = '';
+
+    tasks.forEach(task => {
+      const isDone = completedTasks.includes(task.id);
+      container.innerHTML += `
+        <div class="task-item">
+          <div class="task-icon-box">${task.icon}</div>
+          <div class="task-info">
+            <h4>${task.title}</h4>
+            <div class="reward">৳ ${task.reward}.০০</div>
+          </div>
+          <button class="task-action-btn ${isDone ? 'completed' : ''}" 
+                  onclick="${isDone ? '' : `completeTask(${task.id}, ${task.reward}, '${task.link}')`}">
+            ${isDone ? 'সম্পন্ন হয়েছে' : 'শুরু করুন'}
+          </button>
+        </div>
+      `;
+    });
+  }
+
+  function completeTask(id, reward, link) {
+    window.open(link, '_blank');
+    setTimeout(() => {
+      userBalance += reward;
+      completedTasks.push(id);
+      localStorage.setItem('taskboi_balance', userBalance);
+      localStorage.setItem('taskboi_completed', JSON.stringify(completedTasks));
+      updateUI();
+      Telegram.WebApp.showAlert(`অভিনন্দন! আপনি ${reward} টাকা অর্জন করেছেন।`);
+    }, 1500);
+  }
+
+  function requestWithdrawal() {
+    const num = document.getElementById('payNumber').value.trim();
+    if(num.length < 11) {
+      Telegram.WebApp.showAlert('দয়া করে সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন!');
+      return;
+    }
+    if(userBalance < 50) {
+      Telegram.WebApp.showAlert('উইথড্র করার জন্য আপনার অ্যাকাউন্টে কমপক্ষে ৫০ টাকা থাকতে হবে!');
+      return;
+    }
+    Telegram.WebApp.showAlert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!');
+    userBalance = 0;
+    localStorage.setItem('taskboi_balance', userBalance);
+    updateUI();
+  }
+
   function switchTab(viewId, btnElement) {
     document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
     document.getElementById(viewId).classList.add('active');
@@ -289,6 +338,9 @@
     }
     window.scrollTo(0, 0);
   }
+
+  // Initial load
+  updateUI();
 </script>
 </body>
 </html>
