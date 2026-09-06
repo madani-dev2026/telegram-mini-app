@@ -3,147 +3,293 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>TaskBoi - Micro Task Platform</title>
+<title>TaskBoi - Pro Micro Task Platform</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --tg-bg: var(--tg-theme-bg-color, #F4F6F8);
-    --tg-text: var(--tg-theme-text-color, #1A1A1A);
-    --tg-hint: var(--tg-theme-hint-color, #8E8E93);
-    --tg-primary: var(--tg-theme-button-color, #0B4F3C);
-    --tg-primary-text: var(--tg-theme-button-text-color, #FFFFFF);
-    --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #FFFFFF);
-    --surface: var(--tg-secondary-bg);
-    --gold: #F0B65B;
-    --radius: 16px;
-    --shadow: 0 4px 12px rgba(0,0,0,0.05);
+    --bg-app: #F4F6F9;
+    --surface: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --primary: #059669;
+    --primary-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
+    --accent: #F59E0B;
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --radius-lg: 24px;
+    --radius-md: 16px;
   }
-  body.dark-mode { --surface: #1C1C1E; --shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-app: #0B0F19;
+      --surface: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+  }
+
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-  body { background-color: var(--tg-bg); color: var(--tg-text); font-family: 'Hind Siliguri', sans-serif; font-size: 15px; padding-bottom: 80px; }
-  h1, h2, h3, .title-font { font-family: 'Baloo Da 2', cursive; font-weight: 700; }
-  .app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; }
-  .header { display: flex; align-items: center; justify-content: space-between; padding: 20px; }
-  .user-info { display: flex; align-items: center; gap: 12px; }
-  .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--tg-primary); color: var(--tg-primary-text); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; overflow: hidden; }
-  .avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .user-meta .name { font-size: 16px; font-weight: 600; line-height: 1.2; }
-  .user-meta .level-badge { display: inline-block; background: rgba(11, 79, 60, 0.1); color: var(--tg-primary); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; margin-top: 4px; }
-  .section-title { padding: 15px 20px 10px; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
-  .section-title span.badge { font-size: 12px; background: var(--gold); color: #000; padding: 2px 8px; border-radius: 8px; }
-  .view { display: none; }
-  .view.active { display: block; }
-  .task-list { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; }
-  .task-card { background: var(--surface); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
-  .task-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--tg-primary); }
-  .task-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(11, 79, 60, 0.08); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-  .task-details { flex: 1; }
-  .task-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
-  .task-tags { display: flex; gap: 6px; }
-  .tag { font-size: 10px; background: var(--tg-bg); color: var(--tg-hint); padding: 2px 6px; border-radius: 4px; font-weight: 600; }
-  .task-reward { text-align: right; }
-  .reward-amt { font-family: 'Baloo Da 2'; font-weight: 700; color: var(--gold); font-size: 18px; line-height: 1; }
-  .task-btn { margin-top: 8px; background: var(--tg-primary); color: var(--tg-primary-text); border: none; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
-  .wallet-card { background: linear-gradient(135deg, var(--tg-primary), #052c21); color: #fff; margin: 0 20px 20px; padding: 24px; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(11, 79, 60, 0.2); }
-  .wallet-card .bal { font-family: 'Baloo Da 2'; font-size: 42px; font-weight: 700; line-height: 1; }
-  .advertiser-box { background: var(--surface); padding: 20px; margin: 0 20px; border-radius: var(--radius); box-shadow: var(--shadow); }
-  .input-group { margin-bottom: 16px; }
-  .input-group label { display: block; font-size: 12px; color: var(--tg-hint); margin-bottom: 6px; font-weight: 600; }
-  .input-group input, .input-group select { width: 100%; background: var(--tg-bg); color: var(--tg-text); border: 1px solid rgba(142,142,147,0.2); padding: 12px; border-radius: 12px; font-family: 'Hind Siliguri'; font-size: 15px; outline: none; }
-  .btn-main { width: 100%; background: var(--tg-primary); color: var(--tg-primary-text); border: none; padding: 14px; border-radius: 14px; font-family: 'Baloo Da 2'; font-weight: 700; font-size: 16px; cursor: pointer; }
-  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 12px 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 100; border-top: 1px solid rgba(142,142,147,0.1); }
-  .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--tg-hint); gap: 4px; font-size: 11px; font-weight: 600; flex: 1; border: none; background: none; cursor: pointer; }
-  .nav-item .icon { font-size: 22px; }
-  .nav-item.active { color: var(--tg-primary); }
+  body { background-color: var(--bg-app); color: var(--text-main); font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif; font-size: 15px; padding-bottom: 95px; }
+  h1, h2, h3, .brand-font { font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif; }
+
+  .app-wrapper { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; }
+
+  /* Top Header */
+  .app-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 20px 10px; }
+  .profile-box { display: flex; align-items: center; gap: 14px; }
+  .avatar-ring { width: 50px; height: 50px; border-radius: 50%; background: var(--primary-gradient); padding: 2px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2); }
+  .avatar-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; color: var(--primary); overflow: hidden; }
+  .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+  .user-details h2 { font-size: 17px; font-weight: 700; color: var(--text-main); line-height: 1.2; }
+  .user-details p { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+  .notification-bell { width: 44px; height: 44px; background: var(--surface); border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: var(--card-shadow); cursor: pointer; position: relative; font-size: 18px; border: 1px solid rgba(255,255,255,0.1); }
+  .notification-bell span { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background: #EF4444; border-radius: 50%; }
+
+  /* Balance Card */
+  .wallet-card { background: var(--primary-gradient); color: #fff; margin: 16px 20px; padding: 24px; border-radius: var(--radius-lg); box-shadow: 0 15px 35px rgba(5, 150, 105, 0.25); position: relative; overflow: hidden; }
+  .wallet-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+  .wallet-card .label { font-size: 13px; opacity: 0.85; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .wallet-card .balance-amount { font-family: 'Plus Jakarta Sans'; font-size: 36px; font-weight: 800; line-height: 1.2; margin: 6px 0 18px; }
+  
+  .wallet-metrics { display: flex; gap: 12px; margin-bottom: 20px; }
+  .metric-pill { flex: 1; background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(8px); padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
+  .metric-pill .m-label { font-size: 11px; opacity: 0.8; margin-bottom: 2px; }
+  .metric-pill .m-value { font-family: 'Plus Jakarta Sans'; font-size: 18px; font-weight: 700; }
+
+  .action-btn { width: 100%; background: #ffffff; color: var(--primary); border: none; padding: 14px; border-radius: 14px; font-family: 'Plus Jakarta Sans'; font-weight: 700; font-size: 15px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.2s; }
+  .action-btn:active { transform: scale(0.98); }
+
+  /* Section Title */
+  .section-header { padding: 10px 20px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .section-header h3 { font-size: 18px; font-weight: 700; color: var(--text-main); }
+  .section-header .badge-pill { background: rgba(5, 150, 105, 0.1); color: var(--primary); font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+
+  /* Views Management */
+  .view-section { display: none; }
+  .view-section.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Task Cards */
+  .task-container { padding: 0 20px; display: flex; flex-direction: column; gap: 14px; }
+  .task-item { background: var(--surface); border-radius: var(--radius-md); padding: 18px; display: flex; align-items: center; gap: 16px; box-shadow: var(--card-shadow); border: 1px solid rgba(0,0,0,0.02); }
+  .task-icon-box { width: 52px; height: 52px; border-radius: 16px; background: rgba(5, 150, 105, 0.08); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .task-info { flex: 1; }
+  .task-info h4 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+  .task-info .reward { font-family: 'Plus Jakarta Sans'; font-weight: 800; color: var(--primary); font-size: 16px; }
+  .task-action-btn { background: var(--primary-gradient); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(5,150,105,0.2); }
+
+  /* Universal Card Box */
+  .card-box { background: var(--surface); margin: 0 20px; padding: 22px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow); }
+  .input-field-group { margin-bottom: 16px; text-align: left; }
+  .input-field-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .input-field-group input, .input-field-group select { width: 100%; background: var(--bg-app); border: 1px solid rgba(100,116,139,0.2); color: var(--text-main); padding: 14px; border-radius: 14px; font-family: 'Hind Siliguri'; font-size: 15px; outline: none; transition: border-color 0.2s; }
+  .input-field-group input:focus { border-color: var(--primary); }
+
+  /* Profile Menu List */
+  .menu-group { background: var(--surface); margin: 0 20px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--card-shadow); }
+  .menu-row { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(100,116,139,0.08); font-weight: 600; font-size: 15px; cursor: pointer; color: var(--text-main); }
+  .menu-row:last-child { border-bottom: none; }
+  .menu-row.logout { color: #EF4444; }
+
+  /* Bottom Navigation Bar */
+  .bottom-navigation { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 12px 0 20px; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05); z-index: 100; border-top: 1px solid rgba(100,116,139,0.08); }
+  .nav-button { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); gap: 4px; font-size: 11px; font-weight: 600; flex: 1; border: none; background: none; cursor: pointer; transition: color 0.2s; }
+  .nav-button .icon { font-size: 22px; }
+  .nav-button.active { color: var(--primary); }
 </style>
 </head>
 <body>
-<div class="app-container">
-  <header class="header">
-    <div class="user-info">
-      <div class="avatar" id="userAvatar">U</div>
-      <div class="user-meta">
-        <div class="name" id="userName">লগিন হচ্ছে...</div>
-        <div class="level-badge">⭐ লেভেল ১ (Starter)</div>
+<div class="app-wrapper">
+
+  <!-- Header Section -->
+  <header class="app-header">
+    <div class="profile-box">
+      <div class="avatar-ring">
+        <div class="avatar-inner" id="userAvatarContainer">শ</div>
       </div>
+      <div class="user-details">
+        <h2 id="userNameContainer">শামীম হাসান</h2>
+        <p>⭐ লেভেল ৩ • বিশ্বস্ত মেম্বার</p>
+      </div>
+    </div>
+    <div class="notification-bell" onclick="Telegram.WebApp.showAlert('কোনো নতুন নোটিফিকেশন নেই!')">
+      🔔<span></span>
     </div>
   </header>
 
-  <section class="view active" id="view-home">
-    <div class="section-title title-font">আজকের টাস্কসমূহ <span class="badge">৩টি বাকি</span></div>
-    <div class="task-list" id="taskContainer">
-      <div class="task-card">
-        <div class="task-icon">🚀</div>
-        <div class="task-details">
-          <div class="task-title">টেলিগ্রাম চ্যানেল জয়েন করুন</div>
-          <div class="task-tags"><span class="tag">CPA Task</span></div>
+  <!-- 1. HOME VIEW -->
+  <section class="view-section active" id="view-home">
+    <div class="wallet-card">
+      <div class="label">মোট মূল ব্যালেন্স</div>
+      <div class="balance-amount">৳ ২৪৫<span style="font-size: 22px; opacity: 0.8;">.০০</span></div>
+      <div class="wallet-metrics">
+        <div class="metric-pill">
+          <div class="m-label">আজকের আয়</div>
+          <div class="m-value">৳ ৪৫</div>
         </div>
-        <div class="task-reward">
-          <div class="reward-amt">৳ ৫.০০</div>
-          <button class="task-btn" onclick="Telegram.WebApp.showAlert('টাস্কটি সফলভাবে শুরু হয়েছে!')">শুরু করুন</button>
+        <div class="metric-pill">
+          <div class="m-label">পেন্ডিং</div>
+          <div class="m-value">৳ ০</div>
         </div>
+      </div>
+      <button class="action-btn" onclick="switchTab('view-wallet')">টাকা উত্তোলন করুন</button>
+    </div>
+
+    <div class="section-header">
+      <h3>উপলব্ধ টাস্কসমূহ</h3>
+      <span class="badge-pill">৩টি বাকি</span>
+    </div>
+    <div class="task-container">
+      <div class="task-item">
+        <div class="task-icon-box">📢</div>
+        <div class="task-info">
+          <h4>টেলিগ্রাম চ্যানেল জয়েন করুন</h4>
+          <div class="reward">৳ ৫.০০</div>
+        </div>
+        <button class="task-action-btn" onclick="Telegram.WebApp.showAlert('টাস্কটি সফলভাবে শুরু হয়েছে!')">শুরু করুন</button>
+      </div>
+      <div class="task-item">
+        <div class="task-icon-box">👥</div>
+        <div class="task-info">
+          <h4>বন্ধুকে আমন্ত্রণ জানান</h4>
+          <div class="reward">৳ ১০.০০</div>
+        </div>
+        <button class="task-action-btn" onclick="switchTab('view-ref')">শেয়ার</button>
       </div>
     </div>
   </section>
 
-  <section class="view" id="view-wallet">
-    <div class="section-title title-font">ওয়ালেট</div>
-    <div class="wallet-card">
-      <div style="font-size: 13px; opacity: 0.8;">বর্তমান ব্যালেন্স</div>
-      <div class="bal">৳ 0.00</div>
+  <!-- 2. WALLET VIEW -->
+  <section class="view-section" id="view-wallet">
+    <div class="section-header" style="padding-top: 15px;">
+      <h3>ওয়ালেট ও পেমেন্ট</h3>
     </div>
-    <div class="advertiser-box">
-      <h3 style="margin-bottom: 12px;">টাকা তুলুন</h3>
-      <div class="input-group">
-        <label>নম্বর (বিকাশ/নগদ)</label>
+    <div class="wallet-card" style="margin-top: 0;">
+      <div class="label">উইথড্রযোগ্য ব্যালেন্স</div>
+      <div class="balance-amount" style="margin-bottom: 0;">৳ ২৪৫<span style="font-size: 22px; opacity: 0.8;">.০০</span></div>
+    </div>
+    <div class="card-box">
+      <div class="input-field-group">
+        <label>পেমেন্ট মাধ্যম সিলেক্ট করুন</label>
+        <select>
+          <option>বিকাশ (Personal)</option>
+          <option>নগদ (Personal)</option>
+        </select>
+      </div>
+      <div class="input-field-group">
+        <label>আপনার মোবাইল নম্বর</label>
         <input type="text" placeholder="01XXXXXXXXX">
       </div>
-      <button class="btn-main" onclick="Telegram.WebApp.showAlert('উইথড্র রিকোয়েস্ট সফল হয়েছে!')">উইথড্র রিকোয়েস্ট দিন</button>
+      <button class="action-btn" style="background: var(--primary-gradient); color: #fff;" onclick="Telegram.WebApp.showAlert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!')">উইথড্র রিকোয়েস্ট পাঠান</button>
     </div>
   </section>
 
-  <section class="view" id="view-ads">
-    <div class="section-title title-font">প্রোমোট / অ্যাডভার্টাইজার</div>
-    <div class="advertiser-box">
-      <div class="input-group">
-        <label>চ্যানেল বা ওয়েবসাইটের লিংক</label>
-        <input type="url" placeholder="https://t.me/yourchannel">
+  <!-- 3. REFERRAL VIEW -->
+  <section class="view-section" id="view-ref">
+    <div class="section-header" style="padding-top: 15px;">
+      <h3>রেফারেল প্রোগ্রাম</h3>
+    </div>
+    <div class="card-box" style="text-align: center;">
+      <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;">আপনার ইউনিক রেফারেল কোড</div>
+      <div style="background: rgba(5,150,105,0.08); color: var(--primary); font-family: 'Plus Jakarta Sans'; font-size: 24px; font-weight: 800; padding: 14px; border-radius: 14px; margin: 12px 0; border: 2px dashed var(--primary); letter-spacing: 1px;">SHAMIM2K</div>
+      <button class="action-btn" style="background: var(--primary-gradient); color: #fff; margin-bottom: 20px;" onclick="Telegram.WebApp.showAlert('রেফারেল লিংক সফলভাবে কপি করা হয়েছে!')">লিংক কপি করুন</button>
+      
+      <div style="display: flex; gap: 12px; border-top: 1px solid rgba(100,116,139,0.1); padding-top: 16px;">
+        <div style="flex: 1; background: var(--bg-app); padding: 12px; border-radius: 12px;">
+          <div style="font-size: 11px; color: var(--text-muted);">মোট রেফার</div>
+          <div style="font-family: 'Plus Jakarta Sans'; font-size: 18px; font-weight: 700; color: var(--primary);">১২ জন</div>
+        </div>
+        <div style="flex: 1; background: var(--bg-app); padding: 12px; border-radius: 12px;">
+          <div style="font-size: 11px; color: var(--text-muted);">রেফার বোনাস</div>
+          <div style="font-family: 'Plus Jakarta Sans'; font-size: 18px; font-weight: 700; color: var(--primary);">৳ ১৮০</div>
+        </div>
       </div>
-      <button class="btn-main" style="background: var(--gold); color: #000;" onclick="Telegram.WebApp.showAlert('ক্যাম্পেইন সাবমিট হয়েছে!')">ক্যাম্পেইন তৈরি করুন</button>
     </div>
   </section>
 
-  <nav class="bottom-nav">
-    <button class="nav-item active" data-target="view-home"><span class="icon">🏠</span>টাস্ক হাব</button>
-    <button class="nav-item" data-target="view-wallet"><span class="icon">👛</span>ওয়ালেট</button>
-    <button class="nav-item" data-target="view-ads"><span class="icon">📢</span>প্রোমোট</button>
+  <!-- 4. PROFILE VIEW -->
+  <section class="view-section" id="view-profile">
+    <div class="section-header" style="padding-top: 15px;">
+      <h3>অ্যাকাউন্ট প্রোফাইল</h3>
+    </div>
+    <div class="card-box" style="text-align: center; margin-bottom: 16px;">
+      <div class="avatar-ring" style="width: 76px; height: 76px; margin: 0 auto 12px;">
+        <div class="avatar-inner" id="profileAvatarContainer" style="font-size: 28px;">শ</div>
+      </div>
+      <h3 id="profileNameContainer" style="font-size: 18px; font-weight: 700;">শামীম হাসান</h3>
+      <p style="font-size: 13px; color: var(--primary); font-weight: 600; margin-top: 4px;">✅ একাউন্ট ভেরিফাইড</p>
+    </div>
+    
+    <div class="menu-group">
+      <div class="menu-row" onclick="Telegram.WebApp.showAlert('ডার্ক মোড আপনার ডিভাইসের থিমের সাথে স্বয়ংক্রিয়ভাবে কাজ করে!')">
+        <span>সিস্টেম থিম মোড</span>
+        <span style="color: var(--text-muted);">➔</span>
+      </div>
+      <div class="menu-row" onclick="Telegram.WebApp.showAlert('নোটিফিকেশন অ্যালার্ট সক্রিয় রয়েছে।')">
+        <span>নোটিফিকেশন সেটিংস</span>
+        <span style="color: var(--text-muted);">➔</span>
+      </div>
+      <div class="menu-row" onclick="Telegram.WebApp.showAlert('অফিসিয়াল সাপোর্টের জন্য অ্যাডমিনের সাথে যোগাযোগ করুন।')">
+        <span>সাপোর্ট সেন্টার</span>
+        <span style="color: var(--text-muted);">➔</span>
+      </div>
+      <div class="menu-row logout" onclick="Telegram.WebApp.showAlert('সফলভাবে লগআউট সম্পন্ন হয়েছে!')">
+        <span>লগ আউট</span>
+        <span>🚪</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="bottom-navigation">
+    <button class="nav-button active" onclick="switchTab('view-home', this)"><span class="icon">🏠</span>হোম</button>
+    <button class="nav-button" onclick="switchTab('view-wallet', this)"><span class="icon">👛</span>ওয়ালেট</button>
+    <button class="nav-button" onclick="switchTab('view-ref', this)"><span class="icon">🎁</span>রেফার</button>
+    <button class="nav-button" onclick="switchTab('view-profile', this)"><span class="icon">👤</span>প্রোফাইল</button>
   </nav>
+
 </div>
 
 <script>
   const tg = window.Telegram.WebApp;
   tg.expand();
-  if(tg.colorScheme === 'dark') document.body.classList.add('dark-mode');
 
-  if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      const user = tg.initDataUnsafe.user;
-      document.getElementById('userName').innerText = user.first_name;
-      if(user.photo_url) document.getElementById('userAvatar').innerHTML = `<img src="${user.photo_url}">`;
-      else document.getElementById('userAvatar').innerText = user.first_name.charAt(0);
-  } else {
-      document.getElementById('userName').innerText = "শামীম হাসান";
+  // Dynamic Telegram User Integration
+  if(tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      const u = tg.initDataUnsafe.user;
+      const fullName = `${u.first_name || ''} ${u.last_name || ''}`.trim();
+      document.getElementById('userNameContainer').innerText = fullName;
+      document.getElementById('profileNameContainer').innerText = fullName;
+      if(u.photo_url) {
+          document.getElementById('userAvatarContainer').innerHTML = `<img src="${u.photo_url}">`;
+          document.getElementById('profileAvatarContainer').innerHTML = `<img src="${u.photo_url}">`;
+      } else {
+          document.getElementById('userAvatarContainer').innerText = u.first_name.charAt(0);
+          document.getElementById('profileAvatarContainer').innerText = u.first_name.charAt(0);
+      }
   }
 
-  document.querySelectorAll('.nav-item').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      const targetView = e.currentTarget.getAttribute('data-target');
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById(targetView).classList.add('active');
-    });
-  });
+  function switchTab(viewId, btnElement) {
+    document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    
+    if(btnElement) {
+      document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+    } else {
+      const indexMap = {'view-home': 0, 'view-wallet': 1, 'view-ref': 2, 'view-profile': 3};
+      const idx = indexMap[viewId];
+      if(idx !== undefined) {
+        const navBtns = document.querySelectorAll('.nav-button');
+        navBtns.forEach(b => b.classList.remove('active'));
+        navBtns[idx].classList.add('active');
+      }
+    }
+    window.scrollTo(0, 0);
+  }
 </script>
 </body>
 </html>
